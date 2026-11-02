@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React from "react";
+import { useState,useEffect } from "react";
 import {
   Home,
   Search,
@@ -69,7 +70,18 @@ function App() {
   const [newPost, setNewPost] = useState("");
   const [followedUsers, setFollowedUsers] = useState([]);
   const [search, setSearch] = useState("");
-
+  // check backend connection
+  useEffect(() => {
+  fetch("http://localhost:5000/api/health")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Backend connected:", data);
+    })
+    .catch((error) => {
+      console.error("Backend connection failed:", error);
+    });
+}, []);
+// your existing createpost continues here
   function createPost(event) {
     event.preventDefault();
 
@@ -134,7 +146,7 @@ function App() {
           onClick={() => setActivePage("Home")}
         >
           <span className="brand-icon">C</span>
-          <span>Connect</span>
+          <span>Mesh</span>
         </a>
 
         <div className="profile-mini">
@@ -505,7 +517,7 @@ function App() {
 
             <footer className="site-footer">
               <p>About · Community · Privacy</p>
-              <p>© 2026 Project Connect</p>
+              <p>© 2026 Mesh</p>
               <span>Built to bring people together.</span>
             </footer>
           </aside>
